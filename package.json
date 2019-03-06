@@ -1,16 +1,20 @@
 {
-  "name": "m-dns",
+  "name": "dns-m",
   "version": "1.0.0",
   "description": "A dns management tool in macos",
   "scripts": {
-    "start": "node ./bin/dns.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "mdns": "./bin/dns.js"
+    "dnsm": "./bin/dns.js"
   },
   "author": "linhu.lu@foxmail.com",
   "license": "MIT",
+  "homepage": "https://github.com/luchangfeng/dns-m",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:luchangfeng/dns-m.git"
+  },
   "dependencies": {
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1"
