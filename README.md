@@ -3,7 +3,7 @@ dns-m is a tool help you easy to manage your dns in MacOS system.
 
 ### Install
 ```bash
-npm i -g dns-m
+npm i -g @luchangfeng/dns-m
 ```
 
 ### Work Service

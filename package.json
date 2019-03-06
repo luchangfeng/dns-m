@@ -1,6 +1,6 @@
 {
-  "name": "dns-m",
-  "version": "1.0.0",
+  "name": "@luchangfeng/dns-m",
+  "version": "1.0.1",
   "description": "A dns management tool in macos",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
