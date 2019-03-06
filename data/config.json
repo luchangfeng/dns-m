@@ -1,0 +1,13 @@
+{
+  "dnsList": [
+    {
+      "name": "auto",
+      "value": "Automatic acquisition"
+    },
+    {
+      "name": "test",
+      "value": "10.18.207.100"
+    }
+  ],
+  "workservice": "Wi-Fi"
+}
