@@ -1,12 +1,12 @@
 {
   "name": "@luchangfeng/dns-m",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A dns management tool in macos",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "dnsm": "./bin/dns.js"
+    "dm": "./bin/dns.js"
   },
   "author": "linhu.lu@foxmail.com",
   "license": "MIT",

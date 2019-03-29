@@ -11,18 +11,18 @@ Workservice is your network interface name, you can look at it by command:
 networksetup -listallnetworkservices
 ```
 
-Before use dns, we should use `dnsm select <workservicename>` to select the work service.
+Before use dns, we should use `dm select <workservicename>` to select the work service.
 
 
 ### Usage
-You can use `dnsm -h` to look at all commands.
+You can use `dm -h` to look at all commands.
 
-`dnsm select <workserviceName>`: select the work service, default service is "Wi-Fi"
+`dm select <workserviceName>`: select the work service, default service is "Wi-Fi"
 
-`dnsm ls`: list all available dns.
+`dm ls`: list all available dns.
 
-`dnsm add <name> <dns>`: add one dns to list.
+`dm add <name> <dns>`: add one dns to list.
 
-`dnsm del <name>`: delete one dns from list.
+`dm del <name>`: delete one dns from list.
 
-`dnsm use <name>`: use the specified dns, the system's dns will change to this value.
+`dm use <name>`: use the specified dns, the system's dns will change to this value.
