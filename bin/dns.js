@@ -4,9 +4,11 @@ const fs = require('fs-extra');
 const nodeDns = require('dns');
 const program = require('commander');
 const { exec, execSync } = require('child_process');
+const os = require('os');
 const pkgInfo = require('../package.json');
 const DMRC = path.join(process.env.HOME, '.dmrc');
 const AUTO_KEY = 'auto';
+const isWin = os.type() === 'Windows_NT';
 
 const getConfig = () => {
   let c = null;
@@ -24,16 +26,40 @@ const getConfig = () => {
 let config = getConfig();
 
 const dnsList = () => {
+  const nDns = nodeDns.getServers().join(', ');
+  console.log('');
+  console.log('  Current work service is', config.workservice);
+  console.log('  Current DNS is', nDns);
+  console.log('');
+
   let curDns = '';
+  if (isWin) {
+    curDns = nDns.trim();
+    const outputs = []
+    let hasSelected = false;
+    for (let i = 0, len = config.dnsList.length; i < len; i++) {
+      const item = config.dnsList[i];
+      outputs.push([
+        curDns === item.value ? (hasSelected = true, '*') : ' ',
+        item.name,
+        '-',
+        item.value
+      ].join(' '));
+    }
+    if (!hasSelected) {
+      outputs[0] = outputs[0].replace(' ', '*');
+    }
+    for (let i = 0, len = outputs.length; i < len; i++) {
+      console.log(outputs[i]);
+    }
+    return;
+  }
+
   try {
     curDns = execSync(`networksetup -getdnsservers ${config.workservice}`, {
       encoding: 'UTF8'
     });
     curDns = curDns.trim();
-    console.log('');
-    console.log('  Current work service is', config.workservice);
-    console.log('  Current DNS is', nodeDns.getServers().join(', '));
-    console.log('');
   } catch (e) {
     console.error(e);
     return;
@@ -114,16 +140,33 @@ const delDns = name => {
   console.log('Delete success.');
 };
 
+const flushDnsInWin = () => {
+  exec('ipconfig /flushdns', err => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log('Use success.');
+  });
+}
+
 const useDns = name => {
   const s = config.workservice;
   if (name === AUTO_KEY) {
-    const cmd = `networksetup -setdnsservers ${s} empty`;
+    const cmd = isWin
+      ? `netsh interface ip set dns "${s}" dhcp`
+      : `networksetup -setdnsservers ${s} empty`;
     exec(cmd, err => {
       if (err) {
         console.error(err);
         return;
       }
-      console.log('Use success.');
+
+      if (isWin) {
+        flushDnsInWin();
+      } else {
+        console.log('Use success.');
+      }
     });
     return;
   }
@@ -133,12 +176,20 @@ const useDns = name => {
     const item = config.dnsList[i];
     if (name === item.name) {
       isExisted = true;
-      exec(`networksetup -setdnsservers ${s} ${item.value}`, err => {
+      const cmd = isWin
+        ? `netsh interface ip set dns "${s}" static ${item.value}`
+        : `networksetup -setdnsservers ${s} ${item.value}`;
+      exec(cmd, err => {
         if (err) {
           console.error(err);
           return;
         }
-        console.log('Use success.');
+
+        if (isWin) {
+          flushDnsInWin();
+        } else {
+          console.log('Use success.');
+        }
       });
       return;
     }

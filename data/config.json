@@ -2,7 +2,7 @@
   "dnsList": [
     {
       "name": "auto",
-      "value": "Automatic acquisition"
+      "value": "DHCP"
     }
   ],
   "workservice": "Wi-Fi"
