@@ -5,10 +5,13 @@ const nodeDns = require('dns');
 const program = require('commander');
 const { exec, execSync } = require('child_process');
 const os = require('os');
+const isWin = os.type() === 'Windows_NT';
+// 在取process.env.HOME之前导入npm模块
+// 否则在windows平台下会出现获取不到的情况
+require('npm');
 const pkgInfo = require('../package.json');
 const DMRC = path.join(process.env.HOME, '.dmrc');
 const AUTO_KEY = 'auto';
-const isWin = os.type() === 'Windows_NT';
 
 const getConfig = () => {
   let c = null;

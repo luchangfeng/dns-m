@@ -32,5 +32,5 @@ You can use `dm -h` to look at all commands.
 
 ### Release Note
 
-**1.0.6**
+**1.0.7**
 1. Support Windows.
